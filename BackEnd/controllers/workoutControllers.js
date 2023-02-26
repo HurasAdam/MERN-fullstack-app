@@ -15,9 +15,10 @@ const createWorkout = async (req, res) => {
 //get all workouts
 
 const getAllWorkouts = async (req, res) => {
-  const workouts = await Workout.find({}).sort({ createdAt: -1 });
 
-  res.status(200).json(workouts);
+  const workouts = await Workout.find({})
+res.status(200).json(workouts)
+ 
 };
 
 //get a single workout
@@ -36,7 +37,15 @@ const workout = await Workout.findOne({id})
 }
 
 //delete workout
+const deleteWorkout= async(req,res)=>{
+
+  const {id}=req.params;
+  const workout = await Workout.deleteOne({id})
+  res.status(200).json('Usunieto poprawnie');
+
+}
+
 
 //update workout
 
-module.exports = { createWorkout, getAllWorkouts, getSingleWorkout };
+module.exports = { createWorkout, getAllWorkouts, getSingleWorkout,deleteWorkout };
