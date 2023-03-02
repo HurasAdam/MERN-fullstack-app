@@ -4,14 +4,34 @@ const mongoose = require("mongoose");
 const createWorkout = async (req, res) => {
   const { title, reps, load } = req.body;
 
+const emptyFields=[]
+
+if(!title){
+  emptyFields.push('title')
+}
+if(!reps){
+  emptyFields.push('reps')
+}
+if(!load){
+  emptyFields.push('load')
+}
+if(emptyFields.length>0){
+return res.status(400).json({error:'Please fill in all the fields',emptyFields})
+}
+try{
   const workout = await Workout.create({
     title,
     reps,
     load,
   });
   res.status(200).json(workout);
-};
+}
+catch(error){
+  res.status(400).json({error:error.message})
+}
 
+
+}
 //get all workouts
 
 const getAllWorkouts = async (req, res) => {
@@ -38,7 +58,7 @@ const deleteWorkout = async (req, res) => {
     return res.status(404).json("error:requested resource does not exist");
   }
   const workout = await Workout.deleteOne({ id });
-  res.status(200).json("Usunieto poprawnie");
+  res.status(200).json(workout)
 };
 
 //update workout

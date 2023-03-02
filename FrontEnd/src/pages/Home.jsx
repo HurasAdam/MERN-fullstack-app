@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { WorkoutDetails } from "../components/WorkoutDetails";
+import { WorkoutForm } from "../components/WorkoutForm";
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 export const Home = () => {
-  const [workouts, setWorkouts] = useState(null);
+const {workouts,dispatch}=useWorkoutsContext()
   useEffect(() => {
     fetchData();
   }, []);
@@ -9,18 +11,19 @@ export const Home = () => {
   const fetchData = () => {
     fetch("http://127.0.0.1:4000/api/workouts")
       .then((res) => res.json())
-      .then((data) => {setWorkouts(data);console.log(data)});
+      .then((data)=>dispatch({type:'SET_WORKOUTS',payload:data}))
   };
 
   return (
     <div className="home">
-      <h2>Home</h2>
+     
       <div className="workouts">
         {workouts &&
           workouts.map((workout) => (
           <WorkoutDetails key={workout._id} id={workout._id} wo={workout}/>
           ))}
       </div>
+     <WorkoutForm/>
     </div>
   );
 };
