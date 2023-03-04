@@ -43,18 +43,36 @@ if(res.ok){
 }
 }
 
-return(
+return (
+    <form className="create">
+      <h3>Add a New Workout</h3>
 
-    <form className="create" action="">
-        <h3>Add New Workout</h3>
-        <label htmlFor="">Exercise Title</label>
-        <input className={emptyFields.includes('title')?'error':''} type="text" value={title} onChange={(e)=>setTitle(e.target.value)} />
-        <label htmlFor="" >Load (in kg)</label>
-        <input className={emptyFields.includes('load')?'error':''} type="number" value={load} onChange={(e)=>setLoad(e.target.value)} />
-        <label htmlFor="">Amount of reps</label>
-        <input className={emptyFields.includes('reps')?'error':''} type="number" value={reps} onChange={(e)=>setReps(e.target.value)}/>
-        <button onClick={handleNewWorkout}>Add</button>
-        {error&&<div className="error">{error}</div>}
+      <label>Excersize Title:</label>
+      <input 
+        type="text"
+        onChange={(e) => setTitle(e.target.value)}
+        value={title}
+        className={emptyFields.includes('title') ? 'error' : ''}
+      />
+
+      <label>Load (in kg):</label>
+      <input 
+        type="number"
+        onChange={(e) => setLoad(e.target.value)}
+        value={load}
+        className={emptyFields.includes('load') ? 'error' : ''}
+      />
+
+      <label>Reps:</label>
+      <input 
+        type="number"
+        onChange={(e) => setReps(e.target.value)}
+        value={reps}
+        className={emptyFields.includes('reps') ? 'error' : ''}
+      />
+
+      <button onClick={handleNewWorkout}>Add Workout</button>
+      {error && <div className="error">{error}</div>}
     </form>
-)
+  )
 }

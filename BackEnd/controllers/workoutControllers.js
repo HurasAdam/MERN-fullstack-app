@@ -2,8 +2,12 @@ const Workout = require("../models/workoutModel");
 const mongoose = require("mongoose");
 // create workout
 const createWorkout = async (req, res) => {
-  const { title, reps, load } = req.body;
+  const { title, reps, load, } = req.body;
 
+  const userId=req.userId
+
+
+  
 const emptyFields=[]
 
 if(!title){
@@ -19,11 +23,9 @@ if(emptyFields.length>0){
 return res.status(400).json({error:'Please fill in all the fields',emptyFields})
 }
 try{
-  const workout = await Workout.create({
-    title,
-    reps,
-    load,
-  });
+const userid= req.user
+
+  const workout = await Workout.create({title, load, reps,userId:userId})
   res.status(200).json(workout);
 }
 catch(error){
@@ -35,7 +37,9 @@ catch(error){
 //get all workouts
 
 const getAllWorkouts = async (req, res) => {
-  const workouts = await Workout.find({});
+  const userId= req.userId
+  console.log(userId)
+  const workouts = await Workout.find({userId});
   res.status(200).json(workouts);
 };
 
